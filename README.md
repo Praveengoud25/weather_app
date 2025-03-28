@@ -19,7 +19,7 @@ Before setting up and running the API, ensure you have the following installed:
 
 ### **2. Clone the Repository**
 ```bash
-git clone <repository-url>
+git clone https://github.com/Praveengoud25/weather_app.git
 cd weather-api
 ```
 
@@ -64,7 +64,7 @@ pip install -r requirements.txt
        Longitude DECIMAL(10, 6)
    );
 
-   CREATE TABLE WeatherData (
+   CREATE TABLE Weather (
        id INT PRIMARY KEY AUTO_INCREMENT,
        venue_id INT,
        timestamp DATETIME,
@@ -81,22 +81,15 @@ pip install -r requirements.txt
        FOREIGN KEY (venue_id) REFERENCES Venue(id)
    );
    ```
-
-2. **Add Sample Data** to the `Venue` table (Optional):
-   ```sql
-   INSERT INTO Venue (Name, Latitude, Longitude)
-   VALUES ("Sydney Opera House", -33.8568, 151.2153);
-   ```
-
 ---
 
 ### **6. Configure Database Credentials**
 1. Open `app.py` and update the database configuration with your MySQL credentials:
    ```python
    db_config = {
-       "host": "localhost",
-       "user": "sqluser",
-       "password": "Prav@1133",
+       "host": "host_url",
+       "user": "db_username",
+       "password": "password",
        "database": "quantaco_weather"
    }
    ```
@@ -106,16 +99,21 @@ pip install -r requirements.txt
 ### **7. Run the Flask API**
 Start the Flask server:
 ```bash
-python app.py
+python weather_data_fetch.py
 ```
-
 The server should start at **http://127.0.0.1:5000/**.
 
 ---
 
 ## **API Endpoints**
 
-### **1. Fetch and Save Weather Data**
+### **1. Configure Postman for API function**
+- **API file:** login into postman app, use import function, Select file option browse to the filename "weather_input.yaml" in the this folder, select the file.
+
+**2. Executing the API**
+- **Run** select Run Button on the top right corner of the Screen after API file is imported.
+
+**3. Fetch and Save Weather Data**
 - **URL:** `http://127.0.0.1:5000/weather/fetch_and_save`  
 - **Method:** `POST`  
 - **Description:** Fetches historical weather data for a specific venue and date range, then saves it to the `WeatherData` table.  
@@ -163,17 +161,4 @@ The server should start at **http://127.0.0.1:5000/**.
 7. Check the response to ensure that data is being saved to the database.
 
 ---
-
-## **Additional Improvements (Optional)**
-- **Dockerize the application:** Create a `Dockerfile` and `docker-compose.yml` to containerize the app.
-- **Set up CI/CD Pipeline:** Automate the deployment process using GitHub Actions, Jenkins, or other CI/CD tools.
-- **Add Unit Tests:** Write test cases for Flask routes using `pytest`.
-
----
-
-## **License**
-This project is licensed under the [MIT License](LICENSE).
-
----
-
 By following these instructions, you should be able to set up, run, and test the Flask API locally and interact with it using Postman.
