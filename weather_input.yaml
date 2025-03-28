@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: Weather Data API
+  version: 1.0.0
+  description: API to fetch hourly weather data and save it in AWS.
+
+paths:
+  /weather/fetch_and_save:
+    post:
+      summary: Fetch and save hourly weather data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                venue_id:
+                  type: string
+                  description: ID of the weather venue.
+                start_date:
+                  type: string
+                  format: date
+                  description: Start date for fetching weather data.
+                end_date:
+                  type: string
+                  format: date
+                  description: End date for fetching weather data.
+      responses:
+        '200':
+          description: Weather data saved successfully
+        '400':
+          description: Error in input parameters
+        '500':
+          description: Internal server error while processing data
