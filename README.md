@@ -64,7 +64,7 @@ pip install -r requirements.txt
        Longitude DECIMAL(10, 6)
    );
 
-   -- Inserting sample data into the Venue table
+   -- Inserting venue id's data into the Venue table
     INSERT INTO Venue (Id, Name, Latitude, Longitude)
     VALUES 
       (1, 'Venue1', 52.52, 13.41),
