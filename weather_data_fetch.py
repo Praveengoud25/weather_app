@@ -14,6 +14,7 @@ db_config = {
     "database": "quantaco_weather"
 }
 
+
 # Open-Meteo API endpoint
 WEATHER_API_URL = "https://archive-api.open-meteo.com/v1/archive"
 
@@ -31,6 +32,13 @@ def fetch_and_save_weather():
     if not venue_id or not start_date or not end_date:
         return jsonify({"status": "error", "message": "Missing required parameters"}), 400
 
+    #dateformeat check
+    try:
+        datetime.strptime(start_date, "%Y-%m-%d")
+        datetime.strptime(end_date, "%Y-%m-%d")
+    except ValueError:
+        return jsonify({"status": "error", "message": "Invalid date format. Use YYYY-MM-DD."}), 400
+        
     conn = None
     cursor = None
     try:
@@ -61,6 +69,8 @@ def fetch_and_save_weather():
 
         if response.status_code != 200:
             return jsonify({"status": "error", "message": "Failed to fetch weather data from external API"}), 500
+        
+        #data_formating check
 
         weather_data = response.json()
         if "hourly" not in weather_data:
@@ -79,6 +89,10 @@ def fetch_and_save_weather():
             showers = weather_data["hourly"]["showers"][i]
             snowfall = weather_data["hourly"]["snowfall"][i]
             snow_depth = weather_data["hourly"]["snow_depth"][i]
+#pull dta into cache table.
+    #check the attributes temp 100 => write error table or else weather table
+    #
+    #write data fro cache to table.
 
             # Insert into weather table
             cursor.execute(
